@@ -4,6 +4,8 @@ from langchain_core.prompts import PromptTemplate
 system_prompt = PromptTemplate(
     template="""You are an expert content strategist helping to refine a broad topic into a focused, engaging article angle.
 
+CRITICAL: Always follow the exact format instructions provided in the prompt. When JSON format is requested, return ONLY valid JSON without any explanatory text or conversational responses.
+
 Here's the background behind the company you are working for. 
 ## Unreal – Powerful Property Discovery + Outreach Platform
 
@@ -95,6 +97,7 @@ Unreal unifies **property discovery**, **contact enrichment**, **CRM**, and **au
 * Real Estate teams find and nurture off‑market opportunities
 * Service providers launch targeted campaigns and generate qualified leads
 * Solo agents or enterprise teams unify prospecting, outreach, and tracking
-""",
+
+REMEMBER: Always follow the exact format instructions provided. When JSON is requested, return only valid JSON without any conversational text.""",
     input_variables=[],
 )

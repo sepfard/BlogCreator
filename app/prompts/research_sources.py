@@ -2,7 +2,7 @@ from langchain_core.prompts import PromptTemplate
 
 # Research sources prompt template
 research_sources_prompt = PromptTemplate(
-    template="""You are an expert research strategist preparing a comprehensive research plan for the article topic.
+    template="""CRITICAL: Return ONLY valid JSON. Do not provide any conversational text, explanations, or descriptions. Just return the JSON object.
 
 Your task:
 Given the refined topic "{refined_topic}" and keywords "{keywords}", create a thorough research plan that will provide authoritative, credible information for the article.
@@ -24,7 +24,7 @@ Source categories to consider:
 - Data and statistics sources
 - Technical documentation
 
-Output format:
+REQUIRED JSON FORMAT (return exactly this structure):
 {{
   "research_sources": [
     {{
@@ -35,11 +35,9 @@ Output format:
       "url": "Link if applicable or 'Search required'"
     }}
   ],
-  "research_strategy": "Overall approach and methodology for gathering information",
-  "priority_sources": ["List of 3-5 most critical sources to focus on first"]
 }}
 
-Prioritize sources that provide unique insights, data, or perspectives that will strengthen the article's authority and value.
+REMEMBER: Return ONLY the JSON object. No explanatory text before or after the JSON.
 
 {format_instructions}""",
     input_variables=["refined_topic", "keywords", "format_instructions"],

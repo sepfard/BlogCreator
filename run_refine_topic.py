@@ -21,7 +21,7 @@ def main():
     """Main function to run the refine topic chain."""
 
     # Configuration - Now using Anthropic exclusively
-    model_name = "claude-3-5-sonnet-20241022"  # Latest Claude model
+    model_name = "claude-sonnet-4-20250514"  # Latest Claude model
     verbose = True  # Enable verbose logging to see prompts
 
     print("=== BlogCreator: Refine Topic Chain Runner ===\n")

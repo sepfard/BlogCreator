@@ -18,14 +18,17 @@ from app.chains.chain_manager import ChainManager
 def main():
     """Main function to run the full BlogCreator pipeline."""
 
-    # Configuration
-    model_name = "claude-3-5-sonnet-20241022"
+    # Configuration - Updated to use Claude 4 for better web search support
+    model_name = (
+        "claude-sonnet-4-20250514"  # Will use Claude 4 for web search when enabled
+    )
     verbose = True
 
     print("=== BlogCreator: Full Pipeline Runner ===\n")
     print(
         "🚀 Running complete workflow: Topic Refinement → Research Source Generation\n"
     )
+    print("🔍 Web search enabled for real-time research source discovery\n")
 
     # Initialize the chain manager
     manager = ChainManager()

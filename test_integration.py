@@ -43,7 +43,7 @@ def test_anthropic_integration():
     """Test Anthropic model integration"""
     print("🔍 Testing Anthropic Integration...")
     try:
-        model = AnthropicModel(model_name="claude-3-sonnet-20240229")
+        model = AnthropicModel(model_name="claude-sonnet-4-20250514")
         prompt = PromptTemplate(
             template="Say hello in {language}", input_variables=["language"]
         )

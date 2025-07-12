@@ -49,13 +49,13 @@ class ChainManager:
         return list(self.chains.keys())
 
     def setup_refine_topic_chain(
-        self, model_name: str = "claude-3-5-sonnet-20241022", verbose: bool = False
+        self, model_name: str = "claude-sonnet-4-20250514", verbose: bool = False
     ):
         """
         Set up the refine topic chain with Anthropic model.
 
         Args:
-            model_name: Anthropic model name (default: claude-3-5-sonnet-20241022)
+            model_name: Anthropic model name (default: claude-sonnet-4-20250514)
             verbose: Whether to enable verbose logging
         """
         model = AnthropicModel(model_name=model_name)
@@ -64,17 +64,25 @@ class ChainManager:
         return refine_chain
 
     def setup_research_source_chain(
-        self, model_name: str = "claude-3-5-sonnet-20241022", verbose: bool = False
+        self,
+        model_name: str = "claude-sonnet-4-20250514",
+        verbose: bool = False,
+        enable_web_search: bool = True,
     ):
         """
-        Set up the research source chain with Anthropic model.
+        Set up the research source chain with Anthropic model and optional web search.
 
         Args:
-            model_name: Anthropic model name (default: claude-3-5-sonnet-20241022)
+            model_name: Anthropic model name (default: claude-sonnet-4-20250514)
             verbose: Whether to enable verbose logging
+            enable_web_search: Whether to enable web search capabilities (default: True)
         """
-        model = AnthropicModel(model_name=model_name)
-        research_chain = ResearchSourceChain(model=model, verbose=verbose)
+        model = AnthropicModel(
+            model_name=model_name, enable_web_search=enable_web_search
+        )
+        research_chain = ResearchSourceChain(
+            model=model, verbose=verbose, enable_web_search=enable_web_search
+        )
         self.register_chain("research_sources", research_chain)
         return research_chain
 
@@ -82,8 +90,9 @@ class ChainManager:
         self,
         topic: str,
         keywords: list,
-        model_name: str = "claude-3-5-sonnet-20241022",
+        model_name: str = "claude-sonnet-4-20250514",
         verbose: bool = False,
+        enable_web_search: bool = True,
     ):
         """
         Run the complete pipeline: topic refinement -> research source generation.
@@ -93,13 +102,14 @@ class ChainManager:
             keywords: List of keywords to focus on
             model_name: Anthropic model name to use
             verbose: Whether to enable verbose logging
+            enable_web_search: Whether to enable web search for research sources (default: True)
 
         Returns:
             Dict containing results from both chains
         """
         # Set up both chains
         self.setup_refine_topic_chain(model_name, verbose)
-        self.setup_research_source_chain(model_name, verbose)
+        self.setup_research_source_chain(model_name, verbose, enable_web_search)
 
         # Run refine topic chain
         refine_inputs = {"topic": topic, "keywords": keywords}
