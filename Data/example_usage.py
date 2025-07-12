@@ -21,11 +21,10 @@ from app import (
     OpenAIModel,
     AnthropicModel,
     PromptTemplate,
-    StringOutputParser,
-    JSONOutputParser,
     LLMChain,
     SequentialChain,
 )
+from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
 
 # Load environment variables from .env file
 load_dotenv()
@@ -88,11 +87,11 @@ def demo_output_parsers():
 
     # Compare string vs JSON output
     string_chain = LLMChain(
-        llm=model, prompt=prompt, output_parser=StringOutputParser(), verbose=True
+        llm=model, prompt=prompt, output_parser=StrOutputParser(), verbose=True
     )
 
     json_chain = LLMChain(
-        llm=model, prompt=prompt, output_parser=JSONOutputParser(), verbose=True
+        llm=model, prompt=prompt, output_parser=JsonOutputParser(), verbose=True
     )
 
     text = "I love sunny days and ice cream!"
@@ -142,18 +141,18 @@ def demo_sequential_pipeline():
     outline_chain = LLMChain(
         llm=model,
         prompt=outline_prompt,
-        output_parser=StringOutputParser(),
+        output_parser=StrOutputParser(),
         verbose=True,
     )
 
     story_chain = LLMChain(
-        llm=model, prompt=story_prompt, output_parser=StringOutputParser(), verbose=True
+        llm=model, prompt=story_prompt, output_parser=StrOutputParser(), verbose=True
     )
 
     summary_chain = LLMChain(
         llm=model,
         prompt=summary_prompt,
-        output_parser=StringOutputParser(),
+        output_parser=StrOutputParser(),
         verbose=True,
     )
 
@@ -186,12 +185,12 @@ def demo_configuration_flexibility():
 
     # Create different configurations
     configs = [
-        {"model": OpenAIModel("gpt-3.5-turbo"), "parser": StringOutputParser()},
+        {"model": OpenAIModel("gpt-3.5-turbo"), "parser": StrOutputParser()},
         {
             "model": AnthropicModel("claude-3-sonnet-20240229"),
-            "parser": StringOutputParser(),
+            "parser": StrOutputParser(),
         },
-        {"model": OpenAIModel("gpt-4"), "parser": JSONOutputParser()},
+        {"model": OpenAIModel("gpt-4"), "parser": JsonOutputParser()},
     ]
 
     inputs = {"concept": "machine learning", "audience": "5-year-old"}

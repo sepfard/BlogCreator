@@ -1,5 +1,12 @@
-from .base_chain import BaseChain
-from .llm_chain import LLMChain
-from .sequential_chain import SequentialChain
+"""
+BlogCreator Chains Module
 
-__all__ = ["BaseChain", "LLMChain", "SequentialChain"]
+This module contains the chain implementations for the BlogCreator application.
+Now uses langchain's built-in components instead of custom implementations.
+"""
+
+from .chain_manager import ChainManager
+from .refine_topic_chain import RefineTopicChain
+from .research_source_chain import ResearchSourceChain
+
+__all__ = ["ChainManager", "RefineTopicChain", "ResearchSourceChain"]

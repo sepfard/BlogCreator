@@ -9,6 +9,14 @@ except ImportError:
         "OpenAI package is required. Install it with: pip install openai>=1.0.0"
     )
 
+# Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional, continue without it
+
 
 class OpenAIModel(BaseLanguageModel):
     """
@@ -36,8 +44,7 @@ class OpenAIModel(BaseLanguageModel):
         Make actual OpenAI API call.
         """
         try:
-            # Extract parameters with defaults
-            max_tokens = kwargs.get("max_tokens", 150)
+            max_tokens = kwargs.get("max_tokens", 10000)
             temperature = kwargs.get("temperature", 0.7)
 
             # Make the API call

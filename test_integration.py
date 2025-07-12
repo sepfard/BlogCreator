@@ -14,9 +14,9 @@ from app import (
     OpenAIModel,
     AnthropicModel,
     PromptTemplate,
-    StringOutputParser,
     LLMChain,
 )
+from langchain_core.output_parsers import StrOutputParser
 
 # Load environment variables from .env file
 load_dotenv()

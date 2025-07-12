@@ -1,0 +1,109 @@
+{
+  "refine_topic_result": {
+    "angles_considered": [
+      {
+        "angle": "How to Build a 5-Stage Property Lead Qualification Framework Using Your CRM",
+        "rationale": "Addresses the common pain point of wasting time on unqualified leads while showcasing Unreal's integrated qualification capabilities",
+        "scope": "Step-by-step framework for scoring property leads, automating qualification steps, and organizing follow-up based on lead quality"
+      },
+      {
+        "angle": "From Cold Property to Hot Lead: Automating Multi-Channel Outreach Sequences That Convert",
+        "rationale": "Highlights Unreal's unified outreach capabilities while teaching valuable automation strategies",
+        "scope": "Creating effective email/call/mail sequences, personalizing messages with property data, tracking engagement metrics"
+      },
+      {
+        "angle": "Territory Mapping: How to Use Property Data to Build Strategic Prospecting Zones",
+        "rationale": "Leverages Unreal's mapping features while addressing the challenge of inefficient territory coverage",
+        "scope": "Using property filters to identify opportunities, organizing outreach by zone, measuring territory ROI"
+      }
+    ],
+    "refined_topic": "How to Build a 5-Stage Property Lead Qualification Framework Using Your CRM: A Data-Driven Approach for Real Estate Professionals",
+    "primary_keyword": "lead qualification",
+    "secondary_keywords": [
+      "CRM",
+      "property outreach",
+      "sales automation",
+      "prospecting",
+      "lead scoring",
+      "qualification framework"
+    ]
+  },
+  "research_sources_result": {
+    "research_sources": [
+      {
+        "source_name": "Journal of Real Estate Research",
+        "category": "Academic",
+        "relevance": "Provides empirical research on lead qualification metrics and conversion rates in real estate",
+        "key_questions": [
+          "What are proven indicators of lead quality in real estate?",
+          "How do different qualification methods impact conversion rates?",
+          "What data points have the strongest correlation with successful deals?"
+        ],
+        "url": "Search required - focus on last 3 years of publications"
+      },
+      {
+        "source_name": "NAR Real Estate in a Digital Age Report",
+        "category": "Industry Report",
+        "relevance": "Current statistics on CRM usage and lead management practices among successful agents",
+        "key_questions": [
+          "What are the most common lead qualification methods used by top performers?",
+          "How are agents leveraging technology in lead scoring?",
+          "What are the benchmark conversion rates at different qualification stages?"
+        ],
+        "url": "https://www.nar.realtor/research-and-statistics/research-reports"
+      },
+      {
+        "source_name": "Salesforce State of Sales Report",
+        "category": "Industry Report",
+        "relevance": "Best practices in CRM-based lead qualification across industries",
+        "key_questions": [
+          "What are universal principles of effective lead scoring?",
+          "How are companies automating qualification processes?",
+          "What KPIs are used to measure qualification framework success?"
+        ],
+        "url": "https://www.salesforce.com/resources/research-reports/"
+      },
+      {
+        "source_name": "Harvard Business Review - Sales Articles",
+        "category": "Thought Leadership",
+        "relevance": "Strategic frameworks for lead qualification and pipeline management",
+        "key_questions": [
+          "What organizational structures support effective lead qualification?",
+          "How to balance automation with human judgment?",
+          "What change management practices ensure framework adoption?"
+        ],
+        "url": "https://hbr.org/topic/sales"
+      },
+      {
+        "source_name": "Zillow Research",
+        "category": "Data and Statistics",
+        "relevance": "Property market trends and buyer behavior patterns",
+        "key_questions": [
+          "What property characteristics indicate higher conversion potential?",
+          "How do market conditions affect lead qualification criteria?",
+          "What demographic factors influence property purchase decisions?"
+        ],
+        "url": "https://www.zillow.com/research/"
+      },
+      {
+        "source_name": "Real Estate CRM Implementation Case Studies",
+        "category": "Case Study",
+        "relevance": "Real-world examples of successful qualification frameworks",
+        "key_questions": [
+          "What challenges arose during framework implementation?",
+          "How were qualification criteria refined over time?",
+          "What measurable results were achieved?"
+        ],
+        "url": "Search required - focus on major brokerage success stories"
+      }
+    ],
+    "research_strategy": "Begin with academic and industry reports to establish data-backed foundation, then supplement with practical case studies and expert insights. Cross-reference findings across sources to identify consistent patterns and best practices. Focus on quantifiable results and actionable frameworks that can be implemented using standard CRM tools.",
+    "priority_sources": [
+      "NAR Real Estate in a Digital Age Report",
+      "Journal of Real Estate Research",
+      "Salesforce State of Sales Report",
+      "Real Estate CRM Implementation Case Studies",
+      "Harvard Business Review - Sales Articles"
+    ]
+  }
+}

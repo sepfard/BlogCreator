@@ -1,5 +1,12 @@
-from .base_parser import BaseOutputParser
-from .string_parser import StringOutputParser
-from .json_parser import JSONOutputParser
+"""
+Output parsers module - now using langchain's built-in parsers.
+This module re-exports langchain's output parsers for convenience.
+"""
 
-__all__ = ["BaseOutputParser", "StringOutputParser", "JSONOutputParser"]
+from langchain_core.output_parsers import (
+    JsonOutputParser,
+    StrOutputParser,
+    PydanticOutputParser,
+)
+
+__all__ = ["JsonOutputParser", "StrOutputParser", "PydanticOutputParser"]

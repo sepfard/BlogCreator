@@ -1,43 +1,42 @@
 """
-Simple LangChain Implementation
+BlogCreator Application
 
-This package provides a simple implementation of LangChain-like functionality
-with model optionality and pipeline creation capabilities.
+This package provides a blog content creation pipeline using LangChain components.
+Now uses langchain's built-in functionality instead of custom implementations.
 
 Key Components:
-- Models: BaseLanguageModel, OpenAIModel, AnthropicModel
-- Prompts: PromptTemplate
-- Output Parsers: StringOutputParser, JSONOutputParser
-- Chains: LLMChain, SequentialChain
+- Models: AnthropicModel (OpenAI removed to focus on Anthropic)
+- Prompts: Uses langchain's PromptTemplate
+- Output Parsers: Uses langchain's built-in parsers
+- Chains: RefineTopicChain, ResearchSourceChain, ChainManager
 """
 
 # Models
-from .models import BaseLanguageModel, OpenAIModel, AnthropicModel
+from .models import AnthropicModel
 
 # Prompts
-from .prompts import PromptTemplate
+from .prompts import refine_topic_prompt, system_prompt, research_sources_prompt
 
-# Output Parsers
-from .output_parsers import BaseOutputParser, StringOutputParser, JSONOutputParser
+# Output Parsers (using langchain's built-in parsers)
+from langchain_core.output_parsers import JsonOutputParser, StrOutputParser
 
 # Chains
-from .chains import BaseChain, LLMChain, SequentialChain
+from .chains import ChainManager, RefineTopicChain, ResearchSourceChain
 
 __version__ = "0.1.0"
 
 __all__ = [
     # Models
-    "BaseLanguageModel",
-    "OpenAIModel",
     "AnthropicModel",
     # Prompts
-    "PromptTemplate",
+    "refine_topic_prompt",
+    "system_prompt",
+    "research_sources_prompt",
     # Output Parsers
-    "BaseOutputParser",
-    "StringOutputParser",
-    "JSONOutputParser",
+    "JsonOutputParser",
+    "StrOutputParser",
     # Chains
-    "BaseChain",
-    "LLMChain",
-    "SequentialChain",
+    "ChainManager",
+    "RefineTopicChain",
+    "ResearchSourceChain",
 ]

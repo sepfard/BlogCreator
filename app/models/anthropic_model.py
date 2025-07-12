@@ -1,62 +1,91 @@
 import os
-from typing import Dict, Any
 from .base_model import BaseLanguageModel
-
-try:
-    from anthropic import Anthropic
-except ImportError:
-    raise ImportError(
-        "Anthropic package is required. Install it with: pip install anthropic>=0.18.0"
-    )
+from dotenv import load_dotenv
+from langchain_anthropic import ChatAnthropic
+from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.prompts import (
+    ChatPromptTemplate,
+    SystemMessagePromptTemplate,
+    HumanMessagePromptTemplate,
+)
 
 
 class AnthropicModel(BaseLanguageModel):
     """
-    Anthropic implementation of BaseLanguageModel.
-    Makes real API calls to Anthropic's Claude models.
+    Anthropic implementation of BaseLanguageModel using langchain's ChatAnthropic.
     """
 
     def __init__(
         self,
-        model_name: str = "claude-3-sonnet-20240229",
+        model_name: str = "claude-3-5-sonnet-20241022",
         api_key: str = None,
         **kwargs,
     ):
         super().__init__(model_name, **kwargs)
-
-        # Get API key from parameter, environment variable, or raise error
+        load_dotenv()
         self.api_key = api_key or os.getenv("ANTHROPIC_API_KEY")
         if not self.api_key:
             raise ValueError(
                 "Anthropic API key is required. Set it via the api_key parameter or ANTHROPIC_API_KEY environment variable."
             )
-
         self.provider = "Anthropic"
-        self.client = Anthropic(api_key=self.api_key)
+        self.chat_model = ChatAnthropic(
+            model=self.model_name,
+            anthropic_api_key=self.api_key,
+            temperature=0.7,
+            max_tokens=4000,
+        )
 
-    def generate(self, prompt: str, **kwargs) -> str:
+    def generate(
+        self,
+        prompt: str,
+        system_prompt: str = None,
+        max_tokens: int = 4000,
+        temperature: float = 0.7,
+        **kwargs,
+    ) -> str:
         """
-        Make actual Anthropic API call.
+        Generate response using langchain's ChatAnthropic with proper system prompt handling.
         """
         try:
-            # Extract parameters with defaults
-            max_tokens = kwargs.get("max_tokens", 150)
-            temperature = kwargs.get("temperature", 0.7)
+            # Update model parameters if provided
+            if max_tokens != 4000 or temperature != 0.7:
+                self.chat_model = ChatAnthropic(
+                    model=self.model_name,
+                    anthropic_api_key=self.api_key,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                )
 
-            # Make the API call
-            response = self.client.messages.create(
-                model=self.model_name,
-                max_tokens=max_tokens,
-                temperature=temperature,
-                messages=[{"role": "user", "content": prompt}],
-            )
+            # Create messages
+            messages = []
 
-            return response.content[0].text
+            # Add system message if provided
+            if system_prompt:
+                messages.append(SystemMessage(content=system_prompt))
+
+            # Add human message
+            messages.append(HumanMessage(content=prompt))
+
+            # Get response
+            response = self.chat_model.invoke(messages)
+            return response.content
 
         except Exception as e:
             raise Exception(f"Anthropic API call failed: {str(e)}")
 
-    def get_model_info(self) -> Dict[str, Any]:
+    def create_chat_prompt_template(self, system_template: str, human_template: str):
+        """
+        Create a ChatPromptTemplate with system and human message templates.
+        """
+        return ChatPromptTemplate.from_messages(
+            [
+                SystemMessagePromptTemplate.from_template(system_template),
+                HumanMessagePromptTemplate.from_template(human_template),
+            ]
+        )
+
+    def get_model_info(self):
         return {
             "provider": self.provider,
             "model_name": self.model_name,
