@@ -10,7 +10,14 @@ This example demonstrates:
 5. Sequential chains (multi-step pipelines)
 """
 
-from langchain_simple import (
+import os
+import sys
+from dotenv import load_dotenv
+
+# Add the parent directory to the Python path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from app import (
     OpenAIModel,
     AnthropicModel,
     PromptTemplate,
@@ -19,6 +26,9 @@ from langchain_simple import (
     LLMChain,
     SequentialChain,
 )
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 def demo_model_optionality():
@@ -32,7 +42,7 @@ def demo_model_optionality():
         template="Write a haiku about {topic}", input_variables=["topic"]
     )
 
-    # Create different models
+    # Create different models (will use environment variables for API keys)
     openai_model = OpenAIModel(model_name="gpt-4")
     anthropic_model = AnthropicModel(model_name="claude-3-sonnet-20240229")
 
@@ -44,12 +54,18 @@ def demo_model_optionality():
     topic = "artificial intelligence"
 
     print(f"\n--- Using OpenAI Model ---")
-    result1 = openai_chain.predict(topic=topic)
-    print(f"Result: {result1}")
+    try:
+        result1 = openai_chain.predict(topic=topic)
+        print(f"Result: {result1}")
+    except Exception as e:
+        print(f"Error with OpenAI: {e}")
 
     print(f"\n--- Using Anthropic Model ---")
-    result2 = anthropic_chain.predict(topic=topic)
-    print(f"Result: {result2}")
+    try:
+        result2 = anthropic_chain.predict(topic=topic)
+        print(f"Result: {result2}")
+    except Exception as e:
+        print(f"Error with Anthropic: {e}")
 
     print(f"\n--- Model Info ---")
     print(f"OpenAI: {openai_model.get_model_info()}")
@@ -149,9 +165,11 @@ def demo_sequential_pipeline():
     # Run the pipeline
     print(f"\n--- Running Multi-Step Pipeline ---")
     theme = "time travel"
-    final_result = pipeline.run({"theme": theme})
-
-    print(f"\nFinal Result: {final_result}")
+    try:
+        final_result = pipeline.run({"theme": theme})
+        print(f"\nFinal Result: {final_result}")
+    except Exception as e:
+        print(f"Pipeline Error: {e}")
 
 
 def demo_configuration_flexibility():
@@ -204,6 +222,14 @@ def main():
     print("🚀 LangChain-like System Demo")
     print("=" * 50)
 
+    # Check for required environment variables
+    if not os.getenv("OPENAI_API_KEY"):
+        print("⚠️  Warning: OPENAI_API_KEY not found in environment")
+    if not os.getenv("ANTHROPIC_API_KEY"):
+        print("⚠️  Warning: ANTHROPIC_API_KEY not found in environment")
+
+    print()
+
     # Run all demos
     demo_model_optionality()
     demo_output_parsers()
@@ -220,6 +246,10 @@ def main():
     print("4. ✅ Simple Chains - Single-step pipelines")
     print("5. ✅ Sequential Chains - Multi-step pipelines")
     print("6. ✅ Configuration Flexibility - Easy reconfiguration")
+    print("\n📝 Note: Make sure to set your API keys in environment variables:")
+    print("   export OPENAI_API_KEY='your-key-here'")
+    print("   export ANTHROPIC_API_KEY='your-key-here'")
+    print("   Or create a .env file with these values")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # Simple LangChain Implementation
 
-A lightweight implementation of LangChain-like functionality demonstrating **model optionality** and **pipeline creation** for LLM applications.
+A lightweight implementation of LangChain-like functionality demonstrating **model optionality** and **pipeline creation** for LLM applications with **real API integrations**.
 
 ## 🎯 Key Features
 
@@ -50,6 +50,35 @@ chain = LLMChain(
 )
 ```
 
+## 🚀 Quick Start
+
+### 1. **Installation**
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. **Set up API Keys**
+
+Copy the example environment file and add your API keys:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and add your API keys:
+
+```
+OPENAI_API_KEY=your-openai-api-key-here
+ANTHROPIC_API_KEY=your-anthropic-api-key-here
+```
+
+### 3. **Run the Example**
+
+```bash
+python Data/example_usage.py
+```
+
 ## 🏗️ Architecture
 
 Our system follows LangChain's core architecture:
@@ -63,8 +92,8 @@ Input → Prompt Template → Language Model → Output Parser → Result
 1. **Models** (`langchain_simple/models/`)
 
    - `BaseLanguageModel`: Abstract interface for all models
-   - `OpenAIModel`: OpenAI implementation
-   - `AnthropicModel`: Anthropic implementation
+   - `OpenAIModel`: OpenAI GPT integration with real API calls
+   - `AnthropicModel`: Anthropic Claude integration with real API calls
 
 2. **Prompts** (`langchain_simple/prompts/`)
 
@@ -79,9 +108,9 @@ Input → Prompt Template → Language Model → Output Parser → Result
    - `LLMChain`: Single-step pipeline
    - `SequentialChain`: Multi-step pipeline
 
-## 🚀 Quick Start
+## 🔧 Usage Examples
 
-1. **Simple Chain:**
+### 1. **Simple Chain:**
 
 ```python
 from langchain_simple import OpenAIModel, PromptTemplate, LLMChain
@@ -96,7 +125,7 @@ chain = LLMChain(llm=model, prompt=prompt)
 result = chain.predict(topic="artificial intelligence")
 ```
 
-2. **Multi-step Pipeline:**
+### 2. **Multi-step Pipeline:**
 
 ```python
 from langchain_simple import SequentialChain
@@ -105,7 +134,7 @@ pipeline = SequentialChain(chains=[chain1, chain2, chain3])
 result = pipeline.run({"input": "value"})
 ```
 
-3. **Switch Models:**
+### 3. **Switch Models:**
 
 ```python
 # Change this line to switch providers
@@ -113,25 +142,12 @@ model = AnthropicModel()  # Instead of OpenAIModel()
 # Everything else stays the same!
 ```
 
-## 📋 Example Output
+## 📋 Requirements
 
-Running `python3 example_usage.py` demonstrates:
-
-```
-🚀 LangChain-like System Demo
-==================================================
-=== DEMO 1: Model Optionality ===
-
---- Using OpenAI Model ---
-[LLMChain] Starting chain with inputs: {'topic': 'artificial intelligence'}
-[LLMChain] Formatted prompt: Write a haiku about artificial intelligence...
-Result: [OpenAI gpt-4] Simulated response...
-
---- Using Anthropic Model ---
-[LLMChain] Starting chain with inputs: {'topic': 'artificial intelligence'}
-[LLMChain] Formatted prompt: Write a haiku about artificial intelligence...
-Result: [Anthropic claude-3-sonnet-20240229] Simulated response...
-```
+- Python 3.7+
+- OpenAI API key (for OpenAI models)
+- Anthropic API key (for Claude models)
+- Internet connection for API calls
 
 ## 🔧 Why This Approach?
 
@@ -142,21 +158,57 @@ Result: [Anthropic claude-3-sonnet-20240229] Simulated response...
 3. **📊 Structured**: Get clean, parsed outputs instead of raw text
 4. **🔗 Pipelines**: Chain multiple steps together for complex workflows
 5. **🎯 Reusable**: Create templates once, use them everywhere
+6. **🚀 Production Ready**: Real API integrations, not simulations
 
 **Real-world applications:**
 
-- Content generation pipelines
-- Data analysis workflows
-- Multi-step reasoning tasks
-- A/B testing different models
-- Building LLM-powered applications
+- **Content Generation**: Create multi-step content pipelines
+- **Research Automation**: Chain research, analysis, and summarization
+- **Customer Support**: Build intelligent response systems
+- **Data Processing**: Extract and structure information from text
+- **Creative Writing**: Generate stories, poems, and creative content
 
-## 🎓 Understanding the Code
+## 🔒 Security Notes
 
-Each component is designed to be:
+- Never commit your `.env` file to version control
+- Store API keys securely and rotate them regularly
+- Use environment variables in production deployments
+- Monitor API usage and costs
 
-- **Extensible**: Easy to add new models or parsers
-- **Testable**: Clear interfaces for unit testing
-- **Maintainable**: Well-structured with clear responsibilities
+## 🐛 Troubleshooting
 
-This implementation gives you the power of LangChain's concepts in a simple, understandable codebase!
+**Common Issues:**
+
+1. **API Key Errors**: Make sure your API keys are set correctly in `.env`
+2. **Rate Limiting**: Both OpenAI and Anthropic have rate limits
+3. **Model Names**: Ensure you're using valid model names for each provider
+4. **Network Issues**: Check your internet connection for API calls
+
+**Error Handling:**
+
+The system includes comprehensive error handling for:
+
+- Missing API keys
+- Invalid model names
+- Network connectivity issues
+- API rate limits
+- Malformed prompts
+
+## 📈 Performance Considerations
+
+- **OpenAI Models**: Generally faster responses, various pricing tiers
+- **Anthropic Models**: Longer context windows, different pricing structure
+- **Caching**: Consider implementing response caching for repeated queries
+- **Batch Processing**: Use batch APIs when available for better efficiency
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is provided as-is for educational and development purposes.
