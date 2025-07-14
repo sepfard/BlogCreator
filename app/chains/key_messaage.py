@@ -3,27 +3,28 @@ from langchain_core.prompts import (
     SystemMessagePromptTemplate,
     HumanMessagePromptTemplate,
 )
-from langchain_core.messages import SystemMessage
 from langchain_core.output_parsers import JsonOutputParser
-from app.prompts.refine_topic import refine_topic_prompt
 from app.prompts.System_prompt import system_prompt
+from app.prompts.key_message import key_message_prompt
 
 
-class RefineTopicChain:
+class KeyMessageChain:
     def __init__(self, model, verbose: bool = False):
         self.chat_model = model
         self.verbose = verbose
         self.output_parser = JsonOutputParser()
-        self.input_keys = ["topic", "keywords"]
+        self.input_keys = ["refined_topic", "keywords"]
         self.output_keys = [
-            "angles_considered",
-            "refined_topic",
-            "primary_keyword",
-            "secondary_keywords",
+            "thesis_statement",
+            "main_points",
+            "reader_takeaway",
+            "content_style",
+            "cta_direction",
         ]
+
         messages = [
             SystemMessagePromptTemplate(prompt=system_prompt),
-            HumanMessagePromptTemplate(prompt=refine_topic_prompt),
+            HumanMessagePromptTemplate(prompt=key_message_prompt),
         ]
 
         self.chat_prompt = ChatPromptTemplate.from_messages(messages)
@@ -31,7 +32,6 @@ class RefineTopicChain:
         self.chain = self.chat_prompt | self.chat_model | self.output_parser
 
     def run(self, inputs):
-
         for key in self.input_keys:
             if key not in inputs:
                 raise ValueError(f"Input '{key}' is required.")
@@ -45,12 +45,12 @@ class RefineTopicChain:
         chain_inputs["format_instructions"] = format_instructions
 
         if self.verbose:
-            print(f"[RefineTopicChain] Running with inputs: {chain_inputs}")
+            print(f"[KeyMessageChain] Running with inputs: {chain_inputs}")
 
         result = self.chain.invoke(chain_inputs)
 
         if self.verbose:
-            print(f"[RefineTopicChain] Result: {result}")
+            print(f"[KeyMessageChain] Result: {result}")
 
         return result
 

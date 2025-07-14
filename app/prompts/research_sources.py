@@ -13,6 +13,7 @@ Requirements:
 3. Focus on academic papers, industry reports, expert blogs, case studies, and authoritative publications
 4. Ensure sources provide diverse perspectives and comprehensive coverage
 5. Include both foundational knowledge and recent developments
+6. Every source should have a valid link
 
 Source categories to consider:
 - Academic/research papers
@@ -32,7 +33,7 @@ REQUIRED JSON FORMAT (return exactly this structure):
       "category": "Source category (e.g., Academic, Industry Report, Case Study)",
       "relevance": "Why this source matters for our topic",
       "key_questions": ["What specific information to extract"],
-      "url": "Link if applicable or 'Search required'"
+      "url": "Link for the source"
     }}
   ],
 }}

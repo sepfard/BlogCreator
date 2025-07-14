@@ -1,29 +1,27 @@
 from langchain_core.prompts import (
     ChatPromptTemplate,
-    SystemMessagePromptTemplate,
     HumanMessagePromptTemplate,
 )
-from langchain_core.messages import SystemMessage
 from langchain_core.output_parsers import JsonOutputParser
-from app.prompts.refine_topic import refine_topic_prompt
-from app.prompts.System_prompt import system_prompt
+from app.prompts.first_draft import first_draft_prompt
 
 
-class RefineTopicChain:
+class FirstDraftChain:
     def __init__(self, model, verbose: bool = False):
         self.chat_model = model
         self.verbose = verbose
         self.output_parser = JsonOutputParser()
-        self.input_keys = ["topic", "keywords"]
-        self.output_keys = [
-            "angles_considered",
-            "refined_topic",
-            "primary_keyword",
-            "secondary_keywords",
+        self.input_keys = [
+            "outline",
+            "content_style",
+            "reader_takeaway",
+            "keywords",
+            "word_count_target",
         ]
+        self.output_keys = ["draft", "writer_notes"]
+
         messages = [
-            SystemMessagePromptTemplate(prompt=system_prompt),
-            HumanMessagePromptTemplate(prompt=refine_topic_prompt),
+            HumanMessagePromptTemplate(prompt=first_draft_prompt),
         ]
 
         self.chat_prompt = ChatPromptTemplate.from_messages(messages)
@@ -31,7 +29,6 @@ class RefineTopicChain:
         self.chain = self.chat_prompt | self.chat_model | self.output_parser
 
     def run(self, inputs):
-
         for key in self.input_keys:
             if key not in inputs:
                 raise ValueError(f"Input '{key}' is required.")
@@ -45,12 +42,12 @@ class RefineTopicChain:
         chain_inputs["format_instructions"] = format_instructions
 
         if self.verbose:
-            print(f"[RefineTopicChain] Running with inputs: {chain_inputs}")
+            print(f"[FirstDraftChain] Running with inputs: {chain_inputs}")
 
         result = self.chain.invoke(chain_inputs)
 
         if self.verbose:
-            print(f"[RefineTopicChain] Result: {result}")
+            print(f"[FirstDraftChain] Result: {result}")
 
         return result
 
