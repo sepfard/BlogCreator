@@ -2,10 +2,10 @@
 BlogCreator Application
 
 This package provides a blog content creation pipeline using LangChain components.
-Now uses langchain's built-in functionality instead of custom implementations.
+Uses langchain's built-in functionality with Anthropic models.
 
 Key Components:
-- Models: AnthropicModel (OpenAI removed to focus on Anthropic)
+- Models: AnthropicModel
 - Prompts: Uses langchain's PromptTemplate
 - Output Parsers: Uses langchain's built-in parsers
 - Chains: RefineTopicChain, ResearchSourceChain, ChainManager

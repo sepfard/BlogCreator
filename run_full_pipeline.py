@@ -28,7 +28,6 @@ def main():
     print(
         "🚀 Running complete workflow: Topic Refinement → Research Source Generation\n"
     )
-    print("🔍 Web search enabled for real-time research source discovery\n")
 
     # Initialize the chain manager
     manager = ChainManager()
